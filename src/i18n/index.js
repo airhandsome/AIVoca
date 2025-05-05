@@ -53,6 +53,10 @@ const messages = {
       customDecks: 'Your Custom Decks',
       defaultDecks: 'Default Decks',
       noResults: 'No decks found matching your search.',
+      defaultbeishigaozhong1: {
+        name: 'BeiShiDa High School Book 1',
+        description: 'Essential vocabulary from Beijing Normal University High School English Book 1'
+      },
       defaulttoefl: {
         name: 'TOEFL Essential Vocabulary',
         description: 'Common vocabulary words for the TOEFL exam'
@@ -200,6 +204,10 @@ const messages = {
       customDecks: '自定义单词本',
       defaultDecks: '默认单词本',
       noResults: '未找到匹配的单词本',
+      defaultbeishigaozhong1: {
+        name: '北师大高中必修一',
+        description: '北师大版高中英语必修一词汇'
+      },
       defaulttoefl: {
         name: 'TOEFL 核心词汇',
         description: 'TOEFL 考试常用词汇'
@@ -242,7 +250,10 @@ const messages = {
       clickToSee: '点击查看释义',
       easy: '简单',
       ukPron: '英音',
-      usPron: '美音'
+      usPron: '美音',
+      examples: '例句',
+      phrases: '短语',
+      memoryTip: '记忆提示'
     },
     settings: {
       title: '设置',

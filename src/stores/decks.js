@@ -5,7 +5,19 @@ import defaultDecks from '../data/defaultDecks';
 
 export const useDeckStore = defineStore('decks', () => {
   // State
-  const decks = ref([...defaultDecks]);
+  const decks = ref([
+    {
+      id: 'default-beishigaozhong1',
+      name: '北师大高中必修一',
+      description: '北师大版高中英语必修一词汇',
+      source: '/src/assets/wordlist/BeiShiGaoZhong_1.json',
+      totalWords: 227,
+      progress: 0,
+      lastStudied: null,
+      coverColor: '#4F46E5'
+    },
+    ...defaultDecks
+  ]);
   const userDecks = ref([]);
   
   // Getters
@@ -160,6 +172,14 @@ export const useDeckStore = defineStore('decks', () => {
     return Math.ceil(baseIntervals[reviewLevel] * difficultyFactor);
   }
   
+  const updateDeckProgress = (deckId, progress) => {
+    const deck = getDeckById.value(deckId);
+    if (deck) {
+      deck.progress = progress;
+      deck.lastStudied = new Date().toISOString();
+    }
+  };
+  
   return {
     decks,
     userDecks,
@@ -172,7 +192,8 @@ export const useDeckStore = defineStore('decks', () => {
     updateWord,
     addWordToDeck,
     removeWordFromDeck,
-    recordWordReview
+    recordWordReview,
+    updateDeckProgress
   };
 }, {
   persist: {

@@ -2,8 +2,10 @@
 import { ref, computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useDeckStore } from '../stores/decks';
+import { useStudyStore } from '../stores/study';
 import { useStatisticsStore } from '../stores/statistics';
 import { useSettingsStore } from '../stores/settings';
+import { useI18n } from 'vue-i18n';
 import VocabCard from '../components/cards/VocabCard.vue';
 
 const props = defineProps({
@@ -15,8 +17,10 @@ const props = defineProps({
 
 const router = useRouter();
 const deckStore = useDeckStore();
+const studyStore = useStudyStore();
 const statsStore = useStatisticsStore();
 const settingsStore = useSettingsStore();
+const { t } = useI18n();
 
 const sessionComplete = ref(false);
 const currentCardIndex = ref(0);
@@ -43,19 +47,24 @@ const showExample = computed(() => {
   return settingsStore.settings.showExamples;
 });
 
-onMounted(() => {
+onMounted(async () => {
   if (!deck.value) {
     router.push({ name: 'decks' });
     return;
   }
   
-  prepareStudySession();
+  if (deck.value.source && deck.value.source.includes('BeiShiGaoZhong')) {
+    await studyStore.loadDeck(props.deckId);
+    studyCards.value = studyStore.wordList;
+  } else {
+    prepareStudySession();
+  }
 });
 
 function prepareStudySession() {
   const maxCards = settingsStore.settings.cardsPerSession;
   
-  // Copy words and sort by review date and difficulty
+  // Handle default deck format
   let wordsToStudy = [...deck.value.words];
   
   if (settingsStore.settings.reviewNewCardsFirst) {
@@ -88,7 +97,9 @@ function handleFlip() {
 
 function handleMarkCorrect() {
   if (currentCard.value) {
-    deckStore.recordWordReview(props.deckId, currentCard.value.id, true);
+    if (!deck.value.source?.includes('BeiShiGaoZhong')) {
+      deckStore.recordWordReview(props.deckId, currentCard.value.id, true);
+    }
     statsStore.recordReview(props.deckId, true);
     correctCount.value++;
     nextCard();
@@ -97,7 +108,9 @@ function handleMarkCorrect() {
 
 function handleMarkIncorrect() {
   if (currentCard.value) {
-    deckStore.recordWordReview(props.deckId, currentCard.value.id, false);
+    if (!deck.value.source?.includes('BeiShiGaoZhong')) {
+      deckStore.recordWordReview(props.deckId, currentCard.value.id, false);
+    }
     statsStore.recordReview(props.deckId, false);
     incorrectCount.value++;
     nextCard();
@@ -110,6 +123,8 @@ function nextCard() {
     showFront.value = true;
   } else {
     sessionComplete.value = true;
+    // Update deck progress
+    deckStore.updateDeckProgress(props.deckId, Math.round((correctCount.value / studyCards.value.length) * 100));
   }
 }
 
@@ -123,7 +138,12 @@ function startNewSession() {
   incorrectCount.value = 0;
   sessionComplete.value = false;
   showFront.value = true;
-  prepareStudySession();
+  if (deck.value.source?.includes('BeiShiGaoZhong')) {
+    studyStore.loadDeck(props.deckId);
+    studyCards.value = studyStore.wordList;
+  } else {
+    prepareStudySession();
+  }
 }
 
 function exitSession() {
@@ -135,13 +155,13 @@ function exitSession() {
   <div v-if="deck" class="study-session">
     <div v-if="!sessionComplete" class="study-container">
       <div class="study-header">
-        <h2>Studying: {{ deck.name }}</h2>
+        <h2>{{ t('study.title') }}: {{ deck.name }}</h2>
         <div class="progress-bar">
           <div class="progress-fill" :style="{ width: `${progress}%` }"></div>
         </div>
         <div class="progress-stats">
           <span>{{ currentCardIndex + 1 }} / {{ studyCards.length }}</span>
-          <span>{{ correctCount }} correct · {{ incorrectCount }} incorrect</span>
+          <span>{{ correctCount }} {{ t('study.easy') }} · {{ incorrectCount }} {{ t('study.difficult') }}</span>
         </div>
       </div>
       
@@ -158,29 +178,29 @@ function exitSession() {
       </div>
       
       <div class="session-controls">
-        <button @click="exitSession" class="exit-button">Exit Session</button>
+        <button @click="exitSession" class="exit-button">{{ t('study.finishSession') }}</button>
       </div>
     </div>
     
     <div v-else class="session-complete">
       <div class="complete-card card">
-        <h2>Session Complete! 🎉</h2>
+        <h2>{{ t('study.finishSession') }} 🎉</h2>
         
         <div class="results-summary">
           <div class="result-item">
-            <div class="result-label">Cards Studied</div>
+            <div class="result-label">{{ t('study.title') }}</div>
             <div class="result-value">{{ studyCards.length }}</div>
           </div>
           <div class="result-item">
-            <div class="result-label">Correct</div>
+            <div class="result-label">{{ t('study.easy') }}</div>
             <div class="result-value correct">{{ correctCount }}</div>
           </div>
           <div class="result-item">
-            <div class="result-label">Incorrect</div>
+            <div class="result-label">{{ t('study.difficult') }}</div>
             <div class="result-value incorrect">{{ incorrectCount }}</div>
           </div>
           <div class="result-item">
-            <div class="result-label">Accuracy</div>
+            <div class="result-label">{{ t('study.accuracy') }}</div>
             <div class="result-value">
               {{ Math.round((correctCount / studyCards.length) * 100) }}%
             </div>
@@ -189,10 +209,10 @@ function exitSession() {
         
         <div class="complete-actions">
           <button @click="startNewSession" class="new-session-button">
-            New Session
+            {{ t('study.nextWord') }}
           </button>
           <button @click="returnToDeck" class="return-button">
-            Return to Deck
+            {{ t('study.finishSession') }}
           </button>
         </div>
       </div>
