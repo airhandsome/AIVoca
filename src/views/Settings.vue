@@ -1,10 +1,12 @@
 <script setup>
 import { reactive } from 'vue';
+import { useI18n } from 'vue-i18n';
 import { useSettingsStore } from '../stores/settings';
 import { useStatisticsStore } from '../stores/statistics';
 
 const settingsStore = useSettingsStore();
 const statsStore = useStatisticsStore();
+const { t } = useI18n();
 
 const formSettings = reactive({ ...settingsStore.settings });
 
@@ -14,7 +16,7 @@ const saveSettings = () => {
 };
 
 const resetStatistics = () => {
-  if (confirm('Are you sure you want to reset all statistics? This action cannot be undone.')) {
+  if (confirm(t('settings.confirmReset'))) {
     statsStore.resetStats();
   }
 };
@@ -22,13 +24,13 @@ const resetStatistics = () => {
 
 <template>
   <div class="settings-page">
-    <h1>Settings</h1>
+    <h1>{{ t('settings.title') }}</h1>
     
     <div class="settings-card card">
-      <h2>Study Settings</h2>
+      <h2>{{ t('settings.studySettings') }}</h2>
       
       <div class="form-group">
-        <label for="cards-per-session">Cards per study session</label>
+        <label for="cards-per-session">{{ t('settings.cardsPerSession') }}</label>
         <input 
           type="number" 
           id="cards-per-session" 
@@ -44,7 +46,7 @@ const resetStatistics = () => {
             type="checkbox" 
             v-model="formSettings.showExamples" 
           />
-          Show example sentences
+          {{ t('settings.showExamples') }}
         </label>
       </div>
       
@@ -54,7 +56,7 @@ const resetStatistics = () => {
             type="checkbox" 
             v-model="formSettings.studyBothSides" 
           />
-          Study both sides (term→definition and definition→term)
+          {{ t('settings.studyBothSides') }}
         </label>
       </div>
       
@@ -64,13 +66,13 @@ const resetStatistics = () => {
             type="checkbox" 
             v-model="formSettings.reviewNewCardsFirst" 
           />
-          Prioritize new cards in study sessions
+          {{ t('settings.prioritizeNewCards') }}
         </label>
       </div>
     </div>
     
     <div class="settings-card card">
-      <h2>Display Settings</h2>
+      <h2>{{ t('settings.displaySettings') }}</h2>
       
       <div class="form-group">
         <label class="checkbox-label">
@@ -78,26 +80,26 @@ const resetStatistics = () => {
             type="checkbox" 
             v-model="formSettings.darkMode" 
           />
-          Dark mode
+          {{ t('settings.darkMode') }}
         </label>
       </div>
     </div>
     
     <div class="settings-card card danger-zone">
-      <h2>Data Management</h2>
+      <h2>{{ t('settings.dataManagement') }}</h2>
       
       <p class="warning-text">
-        Warning: The following actions cannot be undone.
+        {{ t('settings.warningText') }}
       </p>
       
       <button @click="resetStatistics" class="danger-button">
-        Reset Statistics
+        {{ t('settings.resetStats') }}
       </button>
     </div>
     
     <div class="settings-actions">
       <button @click="saveSettings" class="save-button">
-        Save Settings
+        {{ t('common.save') }}
       </button>
     </div>
   </div>

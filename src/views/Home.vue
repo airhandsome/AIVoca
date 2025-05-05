@@ -1,6 +1,7 @@
 <script setup>
 import { ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
+import { useI18n } from 'vue-i18n';
 import { useDeckStore } from '../stores/decks';
 import { useStatisticsStore } from '../stores/statistics';
 import DeckCard from '../components/cards/DeckCard.vue';
@@ -8,6 +9,7 @@ import DeckCard from '../components/cards/DeckCard.vue';
 const router = useRouter();
 const deckStore = useDeckStore();
 const statsStore = useStatisticsStore();
+const { t } = useI18n();
 
 const recentlyStudiedDecks = computed(() => {
   return deckStore.allDecks
@@ -45,31 +47,31 @@ const navigateToCreateDeck = () => {
 <template>
   <div class="home-page">
     <section class="hero-section card">
-      <h1>Ready to expand your vocabulary?</h1>
-      <p>Study with flashcards to memorize new words effectively.</p>
+      <h1>{{ t('home.welcomeMessage') }}</h1>
+      <p>{{ t('home.welcomeDescription') }}</p>
       <div class="hero-actions">
-        <button @click="navigateToDecks" class="primary-button">Browse Decks</button>
-        <button @click="navigateToCreateDeck" class="secondary-button">Create Your Own</button>
+        <button @click="navigateToDecks" class="primary-button">{{ t('home.browseDecks') }}</button>
+        <button @click="navigateToCreateDeck" class="secondary-button">{{ t('home.createYourOwn') }}</button>
       </div>
     </section>
     
     <section class="stats-section">
       <div class="stat-card">
         <div class="stat-value">{{ studyStreak }}</div>
-        <div class="stat-label">Day streak</div>
+        <div class="stat-label">{{ t('home.streak') }}</div>
       </div>
       <div class="stat-card">
         <div class="stat-value">{{ statsStore.stats.totalReviewed }}</div>
-        <div class="stat-label">Cards reviewed</div>
+        <div class="stat-label">{{ t('home.cardsReviewed') }}</div>
       </div>
       <div class="stat-card">
         <div class="stat-value">{{ accuracy }}%</div>
-        <div class="stat-label">Accuracy</div>
+        <div class="stat-label">{{ t('home.accuracy') }}</div>
       </div>
     </section>
     
     <section v-if="hasStudiedDecks" class="recently-studied-section section">
-      <h2>Recently Studied</h2>
+      <h2>{{ t('home.recentlyStudied') }}</h2>
       <div class="decks-list">
         <DeckCard 
           v-for="deck in recentlyStudiedDecks" 
@@ -80,7 +82,7 @@ const navigateToCreateDeck = () => {
     </section>
     
     <section class="popular-decks-section section">
-      <h2>Popular Decks</h2>
+      <h2>{{ t('home.popularDecks') }}</h2>
       <div class="decks-list">
         <DeckCard 
           v-for="deck in topDecks" 
@@ -89,7 +91,7 @@ const navigateToCreateDeck = () => {
         />
       </div>
       <div class="view-all">
-        <button @click="navigateToDecks" class="text-button">View all decks</button>
+        <button @click="navigateToDecks" class="text-button">{{ t('home.viewAllDecks') }}</button>
       </div>
     </section>
   </div>
@@ -102,21 +104,32 @@ const navigateToCreateDeck = () => {
 
 .hero-section {
   text-align: center;
-  padding: var(--spacing-xl);
+  padding: var(--spacing-xl) var(--spacing-xl) calc(var(--spacing-xl) * 1.5);
   margin-bottom: var(--spacing-xl);
-  background-color: var(--color-primary);
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark, #2563eb) 100%);
   color: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
 .hero-section h1 {
-  font-size: 2rem;
+  font-size: 2.5rem;
   margin-bottom: var(--spacing-md);
+  font-weight: 800;
+  background: linear-gradient(135deg, #ffffff 0%, #e0e0e0 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .hero-section p {
-  font-size: 1.1rem;
+  font-size: 1.25rem;
   margin-bottom: var(--spacing-lg);
   opacity: 0.9;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
 }
 
 .hero-actions {

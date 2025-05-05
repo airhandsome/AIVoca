@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- 背景圆形 -->
+  <circle cx="256" cy="256" r="240" fill="#4A90E2"/>
+  
+  <!-- AI 文字 -->
+  <path d="M160 160L200 352M180 256H220M300 160V352M260 160H340" stroke="white" stroke-width="40" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- 书本形状 -->
+  <path d="M140 120C140 120 200 100 256 100C312 100 372 120 372 120V392C372 392 312 372 256 372C200 372 140 392 140 392V120Z" stroke="white" stroke-width="20" fill="none"/>
+</svg> 

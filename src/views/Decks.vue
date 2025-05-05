@@ -1,9 +1,11 @@
 <script setup>
 import { computed, ref } from 'vue';
+import { useI18n } from 'vue-i18n';
 import { useDeckStore } from '../stores/decks';
 import DeckCard from '../components/cards/DeckCard.vue';
 
 const deckStore = useDeckStore();
+const { t } = useI18n();
 const searchQuery = ref('');
 
 const filteredDecks = computed(() => {
@@ -31,19 +33,19 @@ const hasUserDecks = computed(() => {
 
 <template>
   <div class="decks-page">
-    <h1>All Vocabulary Decks</h1>
+    <h1>{{ t('decks.title') }}</h1>
     
     <div class="search-container">
       <input 
         type="text" 
         v-model="searchQuery" 
-        placeholder="Search decks..." 
+        :placeholder="t('common.search')" 
         class="search-input"
       />
     </div>
     
     <section v-if="hasUserDecks" class="user-decks-section section">
-      <h2>Your Custom Decks</h2>
+      <h2>{{ t('decks.createDeck') }}</h2>
       <div class="decks-list">
         <DeckCard 
           v-for="deck in userDecks" 
@@ -54,7 +56,7 @@ const hasUserDecks = computed(() => {
     </section>
     
     <section class="default-decks-section section">
-      <h2>Default Decks</h2>
+      <h2>{{ t('decks.title') }}</h2>
       <div class="decks-list">
         <DeckCard 
           v-for="deck in defaultDecks" 
@@ -65,7 +67,7 @@ const hasUserDecks = computed(() => {
     </section>
 
     <div v-if="filteredDecks.length === 0" class="no-results">
-      <p>No decks found matching your search.</p>
+      <p>{{ t('common.search') }}</p>
     </div>
   </div>
 </template>

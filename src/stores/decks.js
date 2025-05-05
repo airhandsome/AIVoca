@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
+import { useI18n } from 'vue-i18n';
 import defaultDecks from '../data/defaultDecks';
 
 export const useDeckStore = defineStore('decks', () => {
@@ -9,7 +10,15 @@ export const useDeckStore = defineStore('decks', () => {
   
   // Getters
   const allDecks = computed(() => {
-    return [...decks.value, ...userDecks.value];
+    const { t } = useI18n();
+    return [...decks.value.map(deck => {
+      const translationKey = deck.id.replace('default-', 'default');
+      return {
+        ...deck,
+        name: t(`decks.${translationKey}.name`),
+        description: t(`decks.${translationKey}.description`)
+      };
+    }), ...userDecks.value];
   });
   
   const getDeckById = computed(() => {
@@ -34,37 +43,26 @@ export const useDeckStore = defineStore('decks', () => {
   
   // Actions
   function addUserDeck(deck) {
-    userDecks.value.push({
+    const newDeck = {
       ...deck,
       id: `user-${Date.now()}`,
       created: new Date(),
       lastStudied: null
-    });
+    };
+    userDecks.value.push(newDeck);
   }
   
   function updateDeck(deckId, updates) {
-    const index = allDecks.value.findIndex(d => d.id === deckId);
-    if (index !== -1) {
-      // If it's a default deck
-      if (deckId.startsWith('default-')) {
-        const deckIndex = decks.value.findIndex(d => d.id === deckId);
-        if (deckIndex !== -1) {
-          decks.value[deckIndex] = { ...decks.value[deckIndex], ...updates };
-        }
-      } else {
-        // If it's a user deck
-        const userDeckIndex = userDecks.value.findIndex(d => d.id === deckId);
-        if (userDeckIndex !== -1) {
-          userDecks.value[userDeckIndex] = { ...userDecks.value[userDeckIndex], ...updates };
-        }
-      }
+    const deck = getDeckById.value(deckId);
+    if (deck) {
+      Object.assign(deck, updates);
     }
   }
   
   function deleteDeck(deckId) {
-    // Only user decks can be deleted
-    if (deckId.startsWith('user-')) {
-      userDecks.value = userDecks.value.filter(d => d.id !== deckId);
+    const index = userDecks.value.findIndex(d => d.id === deckId);
+    if (index !== -1) {
+      userDecks.value.splice(index, 1);
     }
   }
   
@@ -177,5 +175,7 @@ export const useDeckStore = defineStore('decks', () => {
     recordWordReview
   };
 }, {
-  persist: true
+  persist: {
+    paths: ['userDecks']
+  }
 });

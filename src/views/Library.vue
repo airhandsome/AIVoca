@@ -1,11 +1,13 @@
 <script setup>
 import { ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
+import { useI18n } from 'vue-i18n';
 import { useDeckStore } from '../stores/decks';
 import DeckCard from '../components/cards/DeckCard.vue';
 
 const router = useRouter();
 const deckStore = useDeckStore();
+const { t } = useI18n();
 const searchQuery = ref('');
 
 const userDecks = computed(() => {
@@ -30,15 +32,15 @@ const createNewDeck = () => {
 <template>
   <div class="library-page">
     <div class="library-header">
-      <h1>Your Vocabulary Library</h1>
-      <button @click="createNewDeck" class="create-button">Create New Deck</button>
+      <h1>{{ t('library.title') }}</h1>
+      <button @click="createNewDeck" class="create-button">{{ t('decks.createDeck') }}</button>
     </div>
     
     <div class="search-container">
       <input 
         type="text" 
         v-model="searchQuery" 
-        placeholder="Search your decks..." 
+        :placeholder="t('library.search')"
         class="search-input"
       />
     </div>
@@ -54,10 +56,10 @@ const createNewDeck = () => {
     <div v-else class="empty-library">
       <div class="empty-state card">
         <div class="empty-icon">📚</div>
-        <h2>Your library is empty</h2>
-        <p>Create your first custom vocabulary deck to get started.</p>
+        <h2>{{ t('library.emptyTitle') }}</h2>
+        <p>{{ t('library.emptyDescription') }}</p>
         <button @click="createNewDeck" class="create-button">
-          Create New Deck
+          {{ t('decks.createDeck') }}
         </button>
       </div>
     </div>

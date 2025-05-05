@@ -1,10 +1,12 @@
 <script setup>
 import { computed, ref } from 'vue';
 import { useRouter } from 'vue-router';
+import { useI18n } from 'vue-i18n';
 import { useDeckStore } from '../stores/decks';
 
 const router = useRouter();
 const deckStore = useDeckStore();
+const { t } = useI18n();
 const searchQuery = ref('');
 
 const difficultWords = computed(() => {
@@ -47,13 +49,13 @@ const startStudySession = () => {
 <template>
   <div class="difficult-words-page">
     <div class="page-header">
-      <h1>Difficult Words</h1>
+      <h1>{{ t('difficultWords.title') }}</h1>
       <button 
         v-if="hasDifficultWords"
         @click="startStudySession" 
         class="study-button"
       >
-        Study Difficult Words
+        {{ t('difficultWords.reviewAll') }}
       </button>
     </div>
     
@@ -61,7 +63,7 @@ const startStudySession = () => {
       <input 
         type="text" 
         v-model="searchQuery" 
-        placeholder="Search difficult words..." 
+        :placeholder="t('difficultWords.search')"
         class="search-input"
       />
     </div>
@@ -76,7 +78,7 @@ const startStudySession = () => {
         <div class="word-term">{{ word.term }}</div>
         <div class="word-definition">{{ word.definition }}</div>
         <div class="word-from">
-          From: <span class="deck-name">{{ word.deckName }}</span>
+          {{ t('difficultWords.from') }} <span class="deck-name">{{ word.deckName }}</span>
         </div>
       </div>
     </div>
@@ -84,10 +86,10 @@ const startStudySession = () => {
     <div v-else class="empty-difficult">
       <div class="empty-state card">
         <div class="empty-icon">🎯</div>
-        <h2>No difficult words yet</h2>
-        <p>Words you mark as difficult during study sessions will appear here for focused review.</p>
+        <h2>{{ t('difficultWords.emptyTitle') }}</h2>
+        <p>{{ t('difficultWords.emptyDescription') }}</p>
         <button @click="router.push({ name: 'decks' })" class="browse-button">
-          Browse Study Decks
+          {{ t('difficultWords.browseDecks') }}
         </button>
       </div>
     </div>

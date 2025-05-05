@@ -1,19 +1,21 @@
 <script setup>
 import { computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import { useI18n } from 'vue-i18n';
 
 const route = useRoute();
 const router = useRouter();
+const { t } = useI18n();
 
 const currentRoute = computed(() => route.name);
 
-const navItems = [
-  { name: 'home', label: 'Home', icon: '🏠' },
-  { name: 'decks', label: 'Decks', icon: '📚' },
-  { name: 'library', label: 'Library', icon: '📖' },
-  { name: 'difficult-words', label: 'Difficult', icon: '⚠️' },
-  { name: 'settings', label: 'Settings', icon: '⚙️' }
-];
+const navItems = computed(() => [
+  { name: 'home', label: t('nav.home'), icon: '🏠' },
+  { name: 'decks', label: t('nav.decks'), icon: '📚' },
+  { name: 'library', label: t('nav.library'), icon: '📖' },
+  { name: 'difficult-words', label: t('nav.difficult'), icon: '⚠️' },
+  { name: 'settings', label: t('nav.settings'), icon: '⚙️' }
+]);
 
 function navigateTo(routeName) {
   router.push({ name: routeName });

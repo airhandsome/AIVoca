@@ -1,9 +1,35 @@
-export default [
+import { i18n } from '../i18n';
+
+const getTranslatedDeck = (id, words) => {
+  const t = i18n.global.t;
+  const deckKey = id.replace('-', '');
+  return {
+    id,
+    name: t(`decks.${deckKey}.name`),
+    description: t(`decks.${deckKey}.description`),
+    icon: getDeckIcon(id),
+    words,
+    created: new Date('2023-01-01'),
+    lastStudied: null
+  };
+};
+
+const getDeckIcon = (id) => {
+  switch (id) {
+    case 'default-toefl':
+      return '📚';
+    case 'default-gre':
+      return '🎓';
+    case 'default-business':
+      return '💼';
+    default:
+      return '📖';
+  }
+};
+
+const defaultDecks = [
   {
     id: 'default-toefl',
-    name: 'TOEFL Essential Vocabulary',
-    description: 'Common vocabulary words for the TOEFL exam',
-    icon: '📚',
     words: [
       {
         id: 'word-1',
@@ -56,14 +82,12 @@ export default [
         reviewCount: 0
       }
     ],
+    icon: '📚',
     created: new Date('2023-01-01'),
     lastStudied: null
   },
   {
     id: 'default-gre',
-    name: 'GRE Vocabulary',
-    description: 'Essential vocabulary for GRE preparation',
-    icon: '🎓',
     words: [
       {
         id: 'word-6',
@@ -116,14 +140,12 @@ export default [
         reviewCount: 0
       }
     ],
+    icon: '🎓',
     created: new Date('2023-01-01'),
     lastStudied: null
   },
   {
     id: 'default-business',
-    name: 'Business English',
-    description: 'Essential vocabulary for business and professional settings',
-    icon: '💼',
     words: [
       {
         id: 'word-11',
@@ -176,7 +198,10 @@ export default [
         reviewCount: 0
       }
     ],
+    icon: '💼',
     created: new Date('2023-01-01'),
     lastStudied: null
   }
 ];
+
+export default defaultDecks;

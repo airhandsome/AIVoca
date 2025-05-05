@@ -1,10 +1,12 @@
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
+import { useI18n } from 'vue-i18n';
 import { useDeckStore } from '../stores/decks';
 
 const router = useRouter();
 const deckStore = useDeckStore();
+const { t } = useI18n();
 
 // Deck form data
 const deckName = ref('');
@@ -33,7 +35,7 @@ const validateForm = () => {
   
   // Validate deck name
   if (!deckName.value.trim()) {
-    errors.value.deckName = 'Deck name is required';
+    errors.value.deckName = t('createDeck.deckName') + t('common.required');
     isValid = false;
   }
   
@@ -43,20 +45,19 @@ const validateForm = () => {
   );
   
   if (validWords.length === 0) {
-    errors.value.words = ['At least one word with term and definition is required'];
+    errors.value.words = [t('createDeck.addWords')];
     isValid = false;
   } else {
     errors.value.words = words.value.map(word => {
       if (!word.term.trim() && word.definition.trim()) {
-        return 'Term is required';
+        return t('createDeck.word') + t('common.required');
       }
       if (word.term.trim() && !word.definition.trim()) {
-        return 'Definition is required';
+        return t('createDeck.meaning') + t('common.required');
       }
       return '';
     });
     
-    // Check if any word has error
     if (errors.value.words.some(error => error)) {
       isValid = false;
     }
@@ -109,19 +110,19 @@ const cancelCreation = () => {
 
 <template>
   <div class="create-deck-page">
-    <h1>Create New Vocabulary Deck</h1>
+    <h1>{{ t('createDeck.title') }}</h1>
     
     <div class="create-form card">
       <div class="form-section">
-        <h2>Deck Information</h2>
+        <h2>{{ t('createDeck.title') }}</h2>
         
         <div class="form-group">
-          <label for="deck-name">Deck Name*</label>
+          <label for="deck-name">{{ t('createDeck.deckName') }}*</label>
           <input 
             type="text" 
             id="deck-name" 
             v-model="deckName" 
-            placeholder="e.g., TOEFL Academic Vocabulary"
+            :placeholder="t('createDeck.deckName')"
           />
           <div v-if="errors.deckName" class="error-message">
             {{ errors.deckName }}
@@ -129,17 +130,17 @@ const cancelCreation = () => {
         </div>
         
         <div class="form-group">
-          <label for="deck-description">Description</label>
+          <label for="deck-description">{{ t('createDeck.description') }}</label>
           <textarea 
             id="deck-description" 
             v-model="deckDescription" 
-            placeholder="Describe what this deck contains..."
+            :placeholder="t('createDeck.description')"
             rows="3"
           ></textarea>
         </div>
         
         <div class="form-group">
-          <label>Deck Icon</label>
+          <label>{{ t('createDeck.category') }}</label>
           <div class="icon-selector">
             <div 
               v-for="icon in availableIcons" 
@@ -156,8 +157,8 @@ const cancelCreation = () => {
       
       <div class="form-section">
         <div class="section-header">
-          <h2>Vocabulary Words</h2>
-          <button @click="addWord" class="add-word-button">Add Word</button>
+          <h2>{{ t('createDeck.addWords') }}</h2>
+          <button @click="addWord" class="add-word-button">{{ t('common.add') }}</button>
         </div>
         
         <div v-if="errors.words.length > 0 && typeof errors.words[0] === 'string'" class="error-message">
@@ -170,23 +171,23 @@ const cancelCreation = () => {
           class="word-form"
         >
           <div class="word-form-header">
-            <h3>Word {{ index + 1 }}</h3>
+            <h3>{{ t('createDeck.word') }} {{ index + 1 }}</h3>
             <button 
               v-if="words.length > 1"
               @click="removeWord(index)" 
               class="remove-word-button"
             >
-              Remove
+              {{ t('common.delete') }}
             </button>
           </div>
           
           <div class="word-form-fields">
             <div class="form-group">
-              <label :for="`term-${index}`">Term*</label>
+              <label :for="`term-${index}`">{{ t('createDeck.word') }}*</label>
               <input 
                 :id="`term-${index}`" 
                 v-model="word.term" 
-                placeholder="e.g., ephemeral"
+                :placeholder="t('createDeck.word')"
               />
               <div v-if="errors.words[index]" class="error-message">
                 {{ errors.words[index] }}
@@ -194,20 +195,20 @@ const cancelCreation = () => {
             </div>
             
             <div class="form-group">
-              <label :for="`definition-${index}`">Definition*</label>
+              <label :for="`definition-${index}`">{{ t('createDeck.meaning') }}*</label>
               <input 
                 :id="`definition-${index}`" 
                 v-model="word.definition" 
-                placeholder="e.g., lasting for a very short time"
+                :placeholder="t('createDeck.meaning')"
               />
             </div>
             
             <div class="form-group">
-              <label :for="`example-${index}`">Example Sentence</label>
+              <label :for="`example-${index}`">{{ t('createDeck.example') }}</label>
               <input 
                 :id="`example-${index}`" 
                 v-model="word.example" 
-                placeholder="e.g., The ephemeral nature of fashion trends..."
+                :placeholder="t('createDeck.example')"
               />
             </div>
           </div>
@@ -215,8 +216,8 @@ const cancelCreation = () => {
       </div>
       
       <div class="form-actions">
-        <button @click="cancelCreation" class="cancel-button">Cancel</button>
-        <button @click="createDeck" class="create-button">Create Deck</button>
+        <button @click="cancelCreation" class="cancel-button">{{ t('common.cancel') }}</button>
+        <button @click="createDeck" class="create-button">{{ t('createDeck.createDeck') }}</button>
       </div>
     </div>
   </div>

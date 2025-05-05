@@ -1,10 +1,14 @@
 <script setup>
 import { ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
+import { useI18n } from 'vue-i18n';
 import { useSettingsStore } from '../../stores/settings';
+import { useLangStore } from '../../stores/lang';
 
 const router = useRouter();
 const settings = useSettingsStore();
+const langStore = useLangStore();
+const { t } = useI18n();
 const isSearchActive = ref(false);
 const searchQuery = ref('');
 
@@ -14,6 +18,10 @@ const toggleDarkMode = () => {
 
 const isDarkMode = computed(() => {
   return settings.darkMode;
+});
+
+const currentLang = computed(() => {
+  return langStore.currentLang;
 });
 
 const toggleSearch = () => {
@@ -39,8 +47,8 @@ const handleSearch = () => {
   <header class="app-header">
     <div class="app-header-content">
       <div class="logo" @click="router.push('/')">
-        <span class="logo-icon">📝</span>
-        <span class="logo-text">VocabMaster</span>
+        <img src="../../assets/logo.png" alt="AIVoca Logo" class="logo-image" />
+        <span class="logo-text">AIVoca</span>
       </div>
       
       <div class="header-controls">
@@ -52,6 +60,13 @@ const handleSearch = () => {
           <span class="material-icon">🔍</span>
         </button>
         
+        <button 
+          class="icon-button lang-button" 
+          @click="langStore.toggleLang"
+        >
+          <span class="material-icon">{{ currentLang === 'zh' ? '🇨🇳' : '🇺🇸' }}</span>
+        </button>
+
         <button 
           class="icon-button theme-button" 
           @click="toggleDarkMode"
@@ -65,7 +80,7 @@ const handleSearch = () => {
       <input 
         type="text" 
         v-model="searchQuery" 
-        placeholder="Search vocabulary..." 
+        :placeholder="t('common.search')" 
         @keyup.enter="handleSearch"
       />
       <button class="search-submit" @click="handleSearch">
@@ -101,11 +116,17 @@ const handleSearch = () => {
   cursor: pointer;
   font-weight: 700;
   font-size: 1.2rem;
+  gap: var(--spacing-sm);
 }
 
-.logo-icon {
-  margin-right: var(--spacing-sm);
-  font-size: 1.5rem;
+.logo-image {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+}
+
+.logo-text {
+  color: var(--color-primary);
 }
 
 .header-controls {
@@ -126,6 +147,8 @@ const handleSearch = () => {
   align-items: center;
   justify-content: center;
   transition: all 0.2s;
+  width: 40px;
+  height: 40px;
 }
 
 .icon-button:hover {
@@ -135,6 +158,10 @@ const handleSearch = () => {
 
 .icon-button.active {
   color: var(--color-primary);
+}
+
+.lang-button .material-icon {
+  font-size: 1.2rem;
 }
 
 .search-bar {
