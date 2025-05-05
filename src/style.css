@@ -1,0 +1,233 @@
+:root {
+  /* Colors - Light Mode */
+  --color-primary: #3B82F6;
+  --color-primary-light: #60A5FA;
+  --color-primary-dark: #2563EB;
+  --color-secondary: #0EA5E9;
+  --color-accent: #8B5CF6;
+  --color-success: #10B981;
+  --color-warning: #F59E0B;
+  --color-error: #EF4444;
+  
+  --color-background: #F9FAFB;
+  --color-surface: #FFFFFF;
+  --color-card: #FFFFFF;
+  --color-text: #111827;
+  --color-text-secondary: #4B5563;
+  --color-border: #E5E7EB;
+
+  /* Spacing */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-xxl: 48px;
+
+  /* Font */
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: var(--spacing-md);
+}
+
+h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.2;
+  margin-bottom: var(--spacing-md);
+}
+
+h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.2;
+  margin-bottom: var(--spacing-sm);
+}
+
+p {
+  margin-bottom: var(--spacing-md);
+}
+
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: var(--color-primary);
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+button:hover {
+  background-color: var(--color-primary-dark);
+}
+
+button:focus,
+button:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+button.secondary {
+  background-color: transparent;
+  border: 1px solid var(--color-primary);
+  color: var(--color-primary);
+}
+
+button.secondary:hover {
+  background-color: rgba(59, 130, 246, 0.05);
+}
+
+.card {
+  background-color: var(--color-card);
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  padding: var(--spacing-lg);
+  margin-bottom: var(--spacing-md);
+}
+
+.section {
+  margin-bottom: var(--spacing-xl);
+}
+
+/* Form Elements */
+input, select, textarea {
+  width: 100%;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  font-size: 1rem;
+  background-color: var(--color-surface);
+  color: var(--color-text);
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.25);
+}
+
+label {
+  display: block;
+  margin-bottom: var(--spacing-xs);
+  font-weight: 500;
+  color: var(--color-text-secondary);
+}
+
+.form-group {
+  margin-bottom: var(--spacing-md);
+}
+
+/* Dark Mode Styles */
+.dark-mode {
+  --color-background: #121212;
+  --color-surface: #1e1e1e;
+  --color-card: #2d2d2d;
+  --color-text: rgba(255, 255, 255, 0.87);
+  --color-text-secondary: rgba(255, 255, 255, 0.6);
+  --color-border: rgba(255, 255, 255, 0.12);
+}
+
+.dark-mode input,
+.dark-mode select,
+.dark-mode textarea {
+  background-color: #2d2d2d;
+  color: rgba(255, 255, 255, 0.87);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.dark-mode input:focus,
+.dark-mode select:focus,
+.dark-mode textarea:focus {
+  border-color: var(--color-primary-light);
+}
+
+.dark-mode button.secondary {
+  color: var(--color-primary-light);
+  border-color: var(--color-primary-light);
+}
+
+.dark-mode button.secondary:hover {
+  background-color: rgba(96, 165, 250, 0.1);
+}
+
+/* Utility Classes */
+.text-center {
+  text-align: center;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-column {
+  flex-direction: column;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.gap-sm {
+  gap: var(--spacing-sm);
+}
+
+.gap-md {
+  gap: var(--spacing-md);
+}
+
+.mt-md {
+  margin-top: var(--spacing-md);
+}
+
+.mb-md {
+  margin-bottom: var(--spacing-md);
+}
+
+.w-full {
+  width: 100%;
+}
