@@ -58,6 +58,16 @@ const handleFlip = () => {
   flipTransitioning.value = true;
   emit('flip');
   
+  // 当翻转到背面时，确保内容滚动到顶部
+  if (!isFlipped.value) {
+    setTimeout(() => {
+      const cardBack = document.querySelector('.card-back');
+      if (cardBack) {
+        cardBack.scrollTop = 0;
+      }
+    }, 50);
+  }
+  
   setTimeout(() => {
     flipTransitioning.value = false;
   }, 300);

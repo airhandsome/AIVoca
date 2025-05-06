@@ -53,12 +53,8 @@ onMounted(async () => {
     return;
   }
   
-  if (deck.value.source && deck.value.source.includes('BeiShiGaoZhong')) {
     await studyStore.loadDeck(props.deckId);
     studyCards.value = studyStore.wordList;
-  } else {
-    prepareStudySession();
-  }
 });
 
 function prepareStudySession() {
