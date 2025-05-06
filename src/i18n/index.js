@@ -57,6 +57,10 @@ const messages = {
         name: 'BeiShiDa High School Book 1',
         description: 'Essential vocabulary from Beijing Normal University High School English Book 1'
       },
+      defaultCET4_1: {
+        name: 'CET4 Vocabulary',
+        description: 'Essential vocabulary for the CET4 exam'
+      },
       defaulttoefl: {
         name: 'TOEFL Essential Vocabulary',
         description: 'Common vocabulary words for the TOEFL exam'
@@ -207,6 +211,10 @@ const messages = {
       defaultbeishigaozhong1: {
         name: '北师大高中必修一',
         description: '北师大版高中英语必修一词汇'
+      },
+      defaultCET4_1: {
+        name: '四级核心词汇',
+        description: '四级考试常用词汇'
       },
       defaulttoefl: {
         name: 'TOEFL 核心词汇',
