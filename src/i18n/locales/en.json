@@ -1,0 +1,155 @@
+{
+  "common": {
+    "switchLang": "Switch to Chinese",
+    "start": "Start Learning",
+    "settings": "Settings",
+    "history": "History",
+    "review": "Review",
+    "search": "Search",
+    "add": "Add",
+    "delete": "Delete",
+    "edit": "Edit",
+    "save": "Save",
+    "cancel": "Cancel",
+    "required": " is required"
+  },
+  "nav": {
+    "home": "Home",
+    "decks": "Decks",
+    "library": "Library",
+    "difficult": "Difficult",
+    "settings": "Settings"
+  },
+  "home": {
+    "title": "Welcome to AIVoca",
+    "startLearning": "Start Learning",
+    "continueStudy": "Continue Study",
+    "todayProgress": "Today's Progress",
+    "wordsLearned": "Words Learned",
+    "wordsToReview": "Words to Review",
+    "streak": "Day Streak",
+    "browseDecks": "Browse Decks",
+    "createYourOwn": "Create Your Own",
+    "welcomeMessage": "Learn Smarter, Not Harder",
+    "welcomeDescription": "Experience the Future of Vocabulary Building: Faster, Easier, Smarter",
+    "recentlyStudied": "Recently Studied",
+    "popularDecks": "Popular Decks",
+    "viewAllDecks": "View all decks",
+    "cardsReviewed": "Cards reviewed",
+    "accuracy": "Accuracy"
+  },
+  "decks": {
+    "title": "My Decks",
+    "createDeck": "Create New Deck",
+    "importDeck": "Import Deck",
+    "deckName": "Deck Name",
+    "wordCount": "Words",
+    "lastStudied": "Last Studied",
+    "progress": "Progress",
+    "actions": "Actions",
+    "customDecks": "Your Custom Decks",
+    "defaultDecks": "Default Decks",
+    "noResults": "No decks found matching your search.",
+    "defaultbeishigaozhong1": {
+      "name": "BeiShiDa High School Book 1",
+      "description": "Essential vocabulary from Beijing Normal University High School English Book 1"
+    },
+    "defaultCET4_1": {
+      "name": "CET4 Vocabulary",
+      "description": "Essential vocabulary for the CET4 exam"
+    },
+    "defaulttoefl": {
+      "name": "TOEFL Essential Vocabulary",
+      "description": "Common vocabulary words for the TOEFL exam"
+    },
+    "defaultgre": {
+      "name": "GRE Vocabulary",
+      "description": "Essential vocabulary for GRE preparation"
+    },
+    "defaultbusiness": {
+      "name": "Business English",
+      "description": "Essential vocabulary for business and professional settings"
+    }
+  },
+  "createDeck": {
+    "title": "Create New Deck",
+    "deckName": "Deck Name",
+    "description": "Description",
+    "category": "Category",
+    "difficulty": "Difficulty",
+    "addWords": "Add Words",
+    "word": "Word",
+    "meaning": "Meaning",
+    "example": "Example",
+    "pronunciation": "Pronunciation",
+    "importFromFile": "Import from File",
+    "createDeck": "Create Deck",
+    "deckInfo": "Deck Information"
+  },
+  "study": {
+    "title": "Study Session",
+    "progress": "Progress",
+    "showAnswer": "Show Answer",
+    "nextWord": "Next Word",
+    "finishSession": "Finish Session",
+    "knowIt": "I Know It",
+    "stillLearning": "Still Learning",
+    "difficult": "Difficult",
+    "example": "Example",
+    "pronunciation": "Pronunciation",
+    "clickToSee": "Click to see the definition",
+    "easy": "Easy",
+    "ukPron": "UK",
+    "usPron": "US"
+  },
+  "settings": {
+    "title": "Settings",
+    "dailyGoal": "Daily Goal",
+    "wordsPerDay": "words per day",
+    "darkMode": "Dark Mode",
+    "notifications": "Notifications",
+    "sound": "Sound Effects",
+    "pronunciation": "Auto-play Pronunciation",
+    "language": "Language",
+    "about": "About",
+    "version": "Version"
+  },
+  "library": {
+    "title": "Word Library",
+    "allWords": "All Words",
+    "learned": "Learned",
+    "learning": "Learning",
+    "difficult": "Difficult",
+    "search": "Search Words",
+    "filter": "Filter",
+    "sort": "Sort By",
+    "emptyTitle": "Your library is empty",
+    "emptyDescription": "Create your first custom vocabulary deck to get started."
+  },
+  "difficultWords": {
+    "title": "Difficult Words",
+    "reviewAll": "Review All",
+    "word": "Word",
+    "meaning": "Meaning",
+    "lastReviewed": "Last Reviewed",
+    "status": "Status",
+    "actions": "Actions",
+    "search": "Search difficult words",
+    "from": "From:",
+    "emptyTitle": "No difficult words yet",
+    "emptyDescription": "Words you mark as difficult during study sessions will appear here for focused review.",
+    "Browse Study Decks": "Browse Study Decks"
+  },
+  "deckDetail": {
+    "title": "Deck Details",
+    "startStudy": "Start Study",
+    "editDeck": "Edit Deck",
+    "deleteDeck": "Delete Deck",
+    "statistics": "Statistics",
+    "wordList": "Word List",
+    "progress": "Progress",
+    "mastered": "Mastered",
+    "learning": "Learning",
+    "notStarted": "Not Started"
+  }
+}
